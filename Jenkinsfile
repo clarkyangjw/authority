@@ -50,27 +50,27 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
         stage('Step 1: Pulling code from Github'){
             checkout([$class: 'GitSCM', branches: [[name: "${branch}"]], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_address}"]]])
         }
-        stage('Code checking by Sonarqube'){
-            script {
-                //引入SonarQube Scanner工具
-                scannerHome = tool 'sonarqube-scanner'
-            }
-            //引入SonarQube Server的服务器环境
-            withSonarQubeEnv('sonarqube-server') {
-//                 sh "${scannerHome}/bin/sonar-scanner"
-                def selectedProjects = "${project_name}".split(',')
-                for(int i=0;i<selectedProjects.size();i++){
-                    def currentProject = selectedProjects[i];
-                    def currentProjectName = currentProject.split('@')[0]
-                    def currentProjectPort = currentProject.split('@')[1]
-                    sh """
-                         cd ${currentProjectName}
-                         ${scannerHome}/bin/sonar-scanner
-                         cd ..
-                    """
-                }
-            }
-        }
+//         stage('Code checking by Sonarqube'){
+//             script {
+//                 //引入SonarQube Scanner工具
+//                 scannerHome = tool 'sonarqube-scanner'
+//             }
+//             //引入SonarQube Server的服务器环境
+//             withSonarQubeEnv('sonarqube-server') {
+// //                 sh "${scannerHome}/bin/sonar-scanner"
+//                 def selectedProjects = "${project_name}".split(',')
+//                 for(int i=0;i<selectedProjects.size();i++){
+//                     def currentProject = selectedProjects[i];
+//                     def currentProjectName = currentProject.split('@')[0]
+//                     def currentProjectPort = currentProject.split('@')[1]
+//                     sh """
+//                          cd ${currentProjectName}
+//                          ${scannerHome}/bin/sonar-scanner
+//                          cd ..
+//                     """
+//                 }
+//             }
+//         }
         // 第二步
         stage('Step 2: Building common tools'){
             //编译并安装公共工程
