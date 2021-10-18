@@ -1,8 +1,10 @@
 def git_address = "git@github.com:clarkyangjw/authority.git"
 def git_auth = "github-auth"
 def branch = "master"
-//module name: eureka_server@10086,hello@10020
-def project_name = "hello@10020"
+//common_project: pd-gateway@8760
+//def common_project_name = "pd-gateway@8760"
+//project_name: pd-auth-server@8764
+def project_name = "pd-auth-server@8764"
 //构建版本的名称
 def tag = "latest"
 def docker_hub_username = "clarkyang"
@@ -45,7 +47,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
 {
     node("jenkins-slave"){
         // 第一步
-        stage('Pulling code from Github'){
+        stage('Step 1: Pulling code from Github'){
             checkout([$class: 'GitSCM', branches: [[name: "${branch}"]], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_address}"]]])
         }
         stage('Code checking by Sonarqube'){
@@ -70,12 +72,12 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
             }
         }
         // 第二步
-        // stage('代码编译'){
-        //     //编译并安装公共工程
-        //     sh "mvn -f tensquare_common clean install"
-        // }
+        stage('Step 2: Building common tools'){
+            //编译并安装公共工程
+            sh "mvn -f pd-tools clean install"
+        }
         // 第三步
-        stage('Building images and deploying project'){
+        stage('Step 3: Building images and deploying project'){
 
             //把选择的项目信息转为数组
             def selectedProjects = "${project_name}".split(',')
@@ -93,7 +95,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 container('docker') {
                     //给镜像打标签
                     sh "docker tag ${imageName} ${docker_hub_username}/${imageName}"
-                    //登录Harbor，并上传镜像
+                    //登录docker_hub，并上传镜像
                     withCredentials([usernamePassword(credentialsId: "${docker_hub_auth}", passwordVariable: 'password', usernameVariable: 'username')]){
                         //登录
                         sh "docker login -u ${username} -p ${password}"
@@ -107,8 +109,8 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def deploy_image_name = "${docker_hub_username}/${imageName}"
                 //部署到K8S
                 sh """
-                    sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' ${currentProjectName}/deploy.yml
-                    sed -i 's#\$SECRET_NAME#${secret_name}#' ${currentProjectName}/deploy.yml
+                    sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' pd-apps/pd-auth/${currentProjectName}/deploy.yml
+                    sed -i 's#\$SECRET_NAME#${secret_name}#' pd-apps/pd-auth/${currentProjectName}/deploy.yml
                 """
                 //cat ${currentProjectName}/deploy.yml
                 //ls /usr/local/apache-maven/repo
@@ -123,7 +125,8 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
 
             }
         }
-        stage ('Sending Email about deploying result'){
+        // 第四步
+        stage ('Step 4: Sending Email about deploying result'){
             emailext(
                 subject: 'Deploying notification: ${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}!',
                 body: '${FILE,path="email.html"}',

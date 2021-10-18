@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-server
+  labels:
+    app: auth-server
+spec:
+  type: NodePort
+  ports:
+  - port: 8764
+    name: auth-server
+    targetPort: 8764
+    nodePort: 30004
+  selector:
+    app: auth-server
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: auth-server
+spec:
+  serviceName: "auth-server"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth-server
+  template:
+    metadata:
+      labels:
+        app: auth-server
+    spec:
+      imagePullSecrets:
+        - name: $SECRET_NAME
+      containers:
+        - name: auth-server
+          image: $IMAGE_NAME
+          ports:
+            - containerPort: 8764
+  podManagementPolicy: "Parallel"
