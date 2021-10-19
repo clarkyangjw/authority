@@ -88,6 +88,17 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def currentProjectName = currentProject.split('@')[0]
                 //项目启动端口
                 def currentProjectPort = currentProject.split('@')[1]
+
+                def parentProjectNames = currentProjectName.split('-')
+                if(parentProjectNames.size() > 2){
+                    sh """
+                        cd pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}
+                    """
+                }else{
+                    sh "cd pd-apps"
+                }
+
+
                 //定义镜像名称
                 def imageName = "${currentProjectName}:${tag}"
                 //编译，构建本地镜像
@@ -122,7 +133,14 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
 //                                     [credentialsId: '341e4f73-a377-466c-b7a8-4fc92f66006b'],
 //                                  ],
                 )
-
+                if(parentProjectNames.size() > 2){
+                    sh """
+                        cd ..
+                        cd ..
+                    """
+                }else{
+                    sh "cd .."
+                }
             }
         }
         // 第四步
