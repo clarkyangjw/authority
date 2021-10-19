@@ -90,25 +90,27 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def currentProjectPort = currentProject.split('@')[1]
 
                 def parentProjectNames = currentProjectName.split('-')
-//                 if(parentProjectNames.size() > 2){
+                def projectPath = ""
+                if(parentProjectNames.size() > 2){
 //                     sh """
 //                         mvn -f pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${parentProjectNames[0]}-${parentProjectNames[1]}-entity clean install
 //                     """
-//                 }
-//                  else{
-//                     sh "cd pd-apps"
-//                 }
+                    projectPath = "pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${currentProjectName}"
+                }
+                 else{
+                    sh "cd pd-apps"
+                }
 
 
                 //定义镜像名称
                 def imageName = "${currentProjectName}:${tag}"
                 //编译，构建本地镜像
                 sh """
-                    mvn -f pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${currentProjectName} clean package dockerfile:build
+                    mvn -f ${projectPath} clean package dockerfile:build
                 """
                 container('docker') {
                     //给镜像打标签
-                    sh "docker tag ${imageName} ${docker_hub_username}/${imageName}"
+                    sh "docker tag ${projectPath} ${docker_hub_username}/${imageName}"
                     //登录docker_hub，并上传镜像
                     withCredentials([usernamePassword(credentialsId: "${docker_hub_auth}", passwordVariable: 'password', usernameVariable: 'username')]){
                         //登录
@@ -123,13 +125,13 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def deploy_image_name = "${docker_hub_username}/${imageName}"
                 //部署到K8S
                 sh """
-                    sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' pd-apps/pd-auth/${currentProjectName}/deploy.yml
-                    sed -i 's#\$SECRET_NAME#${secret_name}#' pd-apps/pd-auth/${currentProjectName}/deploy.yml
+                    sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' ${projectPath}/deploy.yml
+                    sed -i 's#\$SECRET_NAME#${secret_name}#' ${projectPath}/deploy.yml
                 """
                 //cat ${currentProjectName}/deploy.yml
                 //ls /usr/local/apache-maven/repo
                 kubernetesDeploy(kubeconfigId: "${k8s_auth}",
-                                 configs: "${currentProjectName}/deploy.yml",
+                                 configs: "${projectPath}/deploy.yml",
 //                                  enableConfigSubstitution: false,
 //                                  secretName: "${secret_name}",
 //                                  dockerCredentials: [

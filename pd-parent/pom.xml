@@ -35,10 +35,10 @@
                 <!--当前环境-->
                 <pom.profile.name>dev</pom.profile.name>
                 <!--Nacos配置中心地址-->
-                <pom.nacos.ip>127.0.0.1</pom.nacos.ip>
+                <pom.nacos.ip>10.188.0.37</pom.nacos.ip>
                 <pom.nacos.port>8848</pom.nacos.port>
                 <!--Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空-->
-                <pom.nacos.namespace>90d8069a-63ad-4410-b8d2-4591ba8d68dc</pom.nacos.namespace>
+                <pom.nacos.namespace>686ad277-56f7-470b-a80f-d50813d41222</pom.nacos.namespace>
             </properties>
         </profile>
         <!-- docker 环境 -->
@@ -112,7 +112,7 @@
         <mybatisplus.version>3.2.0</mybatisplus.version>
         <p6spy.version>3.8.7</p6spy.version>
         <fastjson.version>1.2.62</fastjson.version>
-        <druid.version>1.1.21</druid.version>
+        <druid.version>1.1.22</druid.version>
         <mysql.version>6.0.6</mysql.version>
         <knife4j.version>2.0.1</knife4j.version>
         <springfox.swagger2.version>2.9.2</springfox.swagger2.version>
