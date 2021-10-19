@@ -90,11 +90,11 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def currentProjectPort = currentProject.split('@')[1]
 
                 def parentProjectNames = currentProjectName.split('-')
-                if(parentProjectNames.size() > 2){
-                    sh """
-                        mvn -f pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${parentProjectNames[0]}-${parentProjectNames[1]}-entity clean install
-                    """
-                }
+//                 if(parentProjectNames.size() > 2){
+//                     sh """
+//                         mvn -f pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${parentProjectNames[0]}-${parentProjectNames[1]}-entity clean install
+//                     """
+//                 }
 //                  else{
 //                     sh "cd pd-apps"
 //                 }
