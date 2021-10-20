@@ -98,7 +98,11 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
 //                     """
                     projectEntityPath = "pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${parentProjectNames[0]}-${parentProjectNames[1]}-entity"
                     projectServerPath = "pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${currentProjectName}"
-                    //sh "cd pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}"
+//                    sh "cd pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}"
+                    sh """
+                        mvn -f pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]} clean install
+                        mvn -f ${projectEntityPath} clean install
+                    """
                 }
                  else{
                     //sh "cd pd-apps"
@@ -110,7 +114,6 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def imageName = "${currentProjectName}:${tag}"
                 //编译，构建本地镜像
                 sh """
-                    mvn -f ${projectEntityPath} clean install
                     mvn -f ${projectServerPath} clean package dockerfile:build
                 """
                 container('docker') {
