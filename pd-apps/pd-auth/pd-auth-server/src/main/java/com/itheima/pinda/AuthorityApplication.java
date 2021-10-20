@@ -41,3 +41,6 @@ public class AuthorityApplication {
         log.info("应用{}启动成功!swagger地址：http://{}:{}/doc.html",appName,hostAddress,port);
     }
 }
+//访问node1或者node2的swagger接口文档
+//http://34.130.22.171:30004/doc.html
+//http://34.130.132.122:30004/doc.html
