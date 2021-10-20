@@ -77,10 +77,10 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
             }
         }
         // 第3步
-//         stage('Step 3: Building common tools'){
-//             //编译并安装公共工程
-//             sh "mvn -f pd-tools clean install"
-//         }
+        stage('Step 3: Building common tools'){
+            //编译并安装公共工程
+            sh "mvn -f pd-tools clean install"
+        }
         // 第4步
         stage('Step 4: Building images and deploying project'){
             //编译安装所有pd-apps为服务
