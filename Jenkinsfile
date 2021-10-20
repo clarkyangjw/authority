@@ -78,7 +78,8 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
 //         }
         // 第三步
         stage('Step 3: Building images and deploying project'){
-
+            //编译安装所有pd-apps为服务
+            sh "mvn -f pd-apps clean install"
             //把选择的项目信息转为数组
             def selectedProjects = "${project_name}".split(',')
             for(int i=0;i<selectedProjects.size();i++){
@@ -99,16 +100,16 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                     projectEntityPath = "pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${parentProjectNames[0]}-${parentProjectNames[1]}-entity"
                     projectServerPath = "pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${currentProjectName}"
 //                    sh "cd pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}"
-                    sh """
-                        mvn -f pd-apps clean install
-                        mvn -f pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]} clean install
-                        mvn -f ${projectEntityPath} clean install
-                    """
+//                     sh """
+//                         mvn -f pd-apps clean install
+//                     """
+//                     mvn -f pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]} clean install
+//                     mvn -f ${projectEntityPath} clean install
                 }
                  else{
                     //sh "cd pd-apps"
                     projectServerPath = "pd-apps/${currentProjectName}"
-                    sh "mvn -f pd-apps clean install"
+//                     sh "mvn -f pd-apps clean install"
                 }
 
 
@@ -120,7 +121,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 """
                 container('docker') {
                     //给镜像打标签
-                    sh "docker tag ${projectServerPath} ${docker_hub_username}/${imageName}"
+                    sh "docker tag ${currentProjectName} ${docker_hub_username}/${imageName}"
                     //登录docker_hub，并上传镜像
                     withCredentials([usernamePassword(credentialsId: "${docker_hub_auth}", passwordVariable: 'password', usernameVariable: 'username')]){
                         //登录
