@@ -111,8 +111,6 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                     projectServerPath = "pd-apps/${currentProjectName}"
 //                     sh "mvn -f pd-apps clean install"
                 }
-
-
                 //定义镜像名称
                 def imageName = "${currentProjectName}:${tag}"
                 //编译，构建本地镜像
@@ -121,7 +119,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 """
                 container('docker') {
                     //给镜像打标签
-                    sh "docker tag ${currentProjectName} ${docker_hub_username}/${imageName}"
+                    sh "docker tag pinda/${currentProjectName} ${docker_hub_username}/${imageName}"
                     //登录docker_hub，并上传镜像
                     withCredentials([usernamePassword(credentialsId: "${docker_hub_auth}", passwordVariable: 'password', usernameVariable: 'username')]){
                         //登录
