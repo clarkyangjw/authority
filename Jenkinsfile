@@ -119,7 +119,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 """
                 container('docker') {
                     //给镜像打标签
-                    sh "docker tag pinda/${currentProjectName} ${docker_hub_username}/${imageName}"
+                    sh "docker tag pinda/${imageName} ${docker_hub_username}/${imageName}"
                     //登录docker_hub，并上传镜像
                     withCredentials([usernamePassword(credentialsId: "${docker_hub_auth}", passwordVariable: 'password', usernameVariable: 'username')]){
                         //登录
@@ -128,7 +128,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                         sh "docker push ${docker_hub_username}/${imageName}"
                     }
                     //删除本地镜像
-                    sh "docker rmi -f ${imageName}"
+                    sh "docker rmi -f pinda/${imageName}"
                     sh "docker rmi -f ${docker_hub_username}/${imageName}"
                 }
                 def deploy_image_name = "${docker_hub_username}/${imageName}"
