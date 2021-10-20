@@ -110,7 +110,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def imageName = "${currentProjectName}:${tag}"
                 //编译，构建本地镜像
                 sh """
-                    mvn -f ${projectEntityPath} clean package dockerfile:build
+                    mvn -f ${projectEntityPath} clean install
                     mvn -f ${projectServerPath} clean package dockerfile:build
                 """
                 container('docker') {
