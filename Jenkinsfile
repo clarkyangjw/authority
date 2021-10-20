@@ -90,16 +90,19 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def currentProjectPort = currentProject.split('@')[1]
 
                 def parentProjectNames = currentProjectName.split('-')
-//                def projectPath = ""
+                def projectEntityPath = ""
+                def projectServerPath = ""
                 if(parentProjectNames.size() > 2){
 //                     sh """
 //                         mvn -f pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${parentProjectNames[0]}-${parentProjectNames[1]}-entity clean install
 //                     """
-//                    projectPath = "pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${currentProjectName}"
-                    sh "cd pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}"
+                    projectEntityPath = "pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${parentProjectNames[0]}-${parentProjectNames[1]-entity}"
+                    projectServerPath = "pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${currentProjectName}"
+                    //sh "cd pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}"
                 }
                  else{
-                    sh "cd pd-apps"
+                    //sh "cd pd-apps"
+                    projectServerPath = "pd-apps/${currentProjectName}"
                 }
 
 
@@ -107,11 +110,12 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def imageName = "${currentProjectName}:${tag}"
                 //编译，构建本地镜像
                 sh """
-                    mvn -f ${currentProjectName} clean package dockerfile:build
+                    mvn -f ${projectEntityPath} clean package dockerfile:build
+                    mvn -f ${projectServerPath} clean package dockerfile:build
                 """
                 container('docker') {
                     //给镜像打标签
-                    sh "docker tag ${currentProjectName} ${docker_hub_username}/${imageName}"
+                    sh "docker tag ${projectServerPath} ${docker_hub_username}/${imageName}"
                     //登录docker_hub，并上传镜像
                     withCredentials([usernamePassword(credentialsId: "${docker_hub_auth}", passwordVariable: 'password', usernameVariable: 'username')]){
                         //登录
@@ -126,13 +130,13 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def deploy_image_name = "${docker_hub_username}/${imageName}"
                 //部署到K8S
                 sh """
-                    sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' ${currentProjectName}/deploy.yml
-                    sed -i 's#\$SECRET_NAME#${secret_name}#' ${currentProjectName}/deploy.yml
+                    sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' ${projectServerPath}/deploy.yml
+                    sed -i 's#\$SECRET_NAME#${secret_name}#' ${projectServerPath}/deploy.yml
                 """
                 //cat ${currentProjectName}/deploy.yml
                 //ls /usr/local/apache-maven/repo
                 kubernetesDeploy(kubeconfigId: "${k8s_auth}",
-                                 configs: "${currentProjectName}/deploy.yml",
+                                 configs: "${projectServerPath}/deploy.yml",
 //                                  enableConfigSubstitution: false,
 //                                  secretName: "${secret_name}",
 //                                  dockerCredentials: [
