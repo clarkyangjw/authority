@@ -100,6 +100,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                     projectServerPath = "pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}/${currentProjectName}"
 //                    sh "cd pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]}"
                     sh """
+                        mvn -f pd-apps clean install
                         mvn -f pd-apps/${parentProjectNames[0]}-${parentProjectNames[1]} clean install
                         mvn -f ${projectEntityPath} clean install
                     """
@@ -107,6 +108,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                  else{
                     //sh "cd pd-apps"
                     projectServerPath = "pd-apps/${currentProjectName}"
+                    sh "mvn -f pd-apps clean install"
                 }
 
 
