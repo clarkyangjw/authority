@@ -84,6 +84,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
         // 第4步
         stage('Step 4: Building images and deploying project'){
             //编译安装所有pd-apps为服务
+            sh "mvn -f pd-parent clean install"
             sh "mvn -f ${projectRootNames} clean install"
             //把选择的项目信息转为数组
             def selectedProjects = "${project_name}".split(',')
