@@ -88,7 +88,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def currentProjectName = currentProject.split('@')[0]
                 //项目启动端口
                 def currentProjectPort = currentProject.split('@')[1]
-
+                //编译微服务的上级项目和所需要的实体类项目
                 def parentProjectNames = currentProjectName.split('-')
                 def projectEntityPath = ""
                 def projectServerPath = ""
