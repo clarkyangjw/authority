@@ -112,14 +112,14 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
 //                     sh "mvn -f pd-apps clean install"
                 }
                 //定义镜像名称
-                def imageName = "${currentProjectName}:${tag}"
+                def imageName = "pinda/${currentProjectName}:${tag}"
                 //编译，构建本地镜像
                 sh """
                     mvn -f ${projectServerPath} clean package dockerfile:build
                 """
                 container('docker') {
                     //给镜像打标签
-                    sh "docker tag pinda/${currentProjectName} ${docker_hub_username}/${imageName}"
+                    sh "docker tag ${imageName} ${docker_hub_username}/${imageName}"
                     //登录docker_hub，并上传镜像
                     withCredentials([usernamePassword(credentialsId: "${docker_hub_auth}", passwordVariable: 'password', usernameVariable: 'username')]){
                         //登录
