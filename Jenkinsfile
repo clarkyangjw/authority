@@ -39,51 +39,51 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
             checkout([$class: 'GitSCM', branches: [[name: "${branch}"]], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_address}"]]])
         }
         // 第2步
-        stage('Step 2: Code checking by Sonarqube'){
-            script {
-                //引入SonarQube Scanner工具
-                scannerHome = tool 'sonarqube-scanner'
-            }
-            //引入SonarQube Server的服务器环境
-            withSonarQubeEnv('sonarqube-server') {
-                def selectedProjects = "${project_name}".split(',')
-                for(int i=0;i<selectedProjects.size();i++){
-                    def currentProject = selectedProjects[i];
-                    def currentProjectName = currentProject.split('@')[0]
-                    def currentProjectPort = currentProject.split('@')[1]
-
-                    def parentProjectNames = currentProjectName.split('-')
-                    def projectServerPath = ""
-                    if(parentProjectNames.size() > 2){
-                        projectServerPath = "${projectRootNames}/${parentProjectNames[0]}-${parentProjectNames[1]}/${currentProjectName}"
-                    }
-                     else{
-                        projectServerPath = "${projectRootNames}/${currentProjectName}"
-                    }
-                    sh """
-                         cd ${projectServerPath}
-                         ${scannerHome}/bin/sonar-scanner
-                    """
-                    if(parentProjectNames.size() > 2){
-                        sh """
-                            cd ..
-                            cd ..
-                        """
-                    }
-                     else{
-                        sh "cd .."
-                    }
-                }
-            }
-        }
+//         stage('Step 2: Code checking by Sonarqube'){
+//             script {
+//                 //引入SonarQube Scanner工具
+//                 scannerHome = tool 'sonarqube-scanner'
+//             }
+//             //引入SonarQube Server的服务器环境
+//             withSonarQubeEnv('sonarqube-server') {
+//                 def selectedProjects = "${project_name}".split(',')
+//                 for(int i=0;i<selectedProjects.size();i++){
+//                     def currentProject = selectedProjects[i];
+//                     def currentProjectName = currentProject.split('@')[0]
+//                     def currentProjectPort = currentProject.split('@')[1]
+//
+//                     def parentProjectNames = currentProjectName.split('-')
+//                     def projectServerPath = ""
+//                     if(parentProjectNames.size() > 2){
+//                         projectServerPath = "${projectRootNames}/${parentProjectNames[0]}-${parentProjectNames[1]}/${currentProjectName}"
+//                     }
+//                      else{
+//                         projectServerPath = "${projectRootNames}/${currentProjectName}"
+//                     }
+//                     sh """
+//                          cd ${projectServerPath}
+//                          ${scannerHome}/bin/sonar-scanner
+//                     """
+//                     if(parentProjectNames.size() > 2){
+//                         sh """
+//                             cd ..
+//                             cd ..
+//                         """
+//                     }
+//                      else{
+//                         sh "cd .."
+//                     }
+//                 }
+//             }
+//         }
         // 第3步
-        stage('Step 3: Building common tools'){
-            //编译并安装公共工程
-            sh "mvn -f pd-tools clean install"
-        }
+//         stage('Step 3: Building common tools'){
+//             //编译并安装公共工程
+//             sh "mvn -f pd-tools clean install"
+//         }
         // 第4步
         stage('Step 4: Building images and deploying project'){
-            //编译安装所有pd-apps为服务
+            //编译安装pd-parent和所有pd-apps为服务
             sh "mvn -f pd-parent clean install"
             sh "mvn -f ${projectRootNames} clean install"
             //把选择的项目信息转为数组
