@@ -2,8 +2,7 @@ def git_address = "git@github.com:clarkyangjw/authority.git"
 def git_auth = "github-auth"
 def branch = "master"
 //project_name: pd-auth-server@8764,pd-gateway@8760
-//def project_name111 = "pd-auth-server@8764,pd-gateway@8760"
-def project_name = "pd-auth-server@8764"
+def project_name = "pd-auth-server@8764,pd-gateway@8760"
 def dockerImagePrefix = "pinda"
 def projectRootNames = "pd-apps"
 //构建版本的名称
@@ -40,7 +39,6 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
             checkout([$class: 'GitSCM', branches: [[name: "${branch}"]], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_address}"]]])
         }
         // 第2步
-        def project_name = "pd-auth-server@8764,pd-gateway@8760"
 //         stage('Step 2: Code checking by Sonarqube'){
 //             script {
 //                 //引入SonarQube Scanner工具
