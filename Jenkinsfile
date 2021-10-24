@@ -3,7 +3,7 @@ def git_auth = "github-auth"
 def branch = "master"
 //project_name: pd-auth-server@8764,pd-gateway@8760
 //def project_name111 = "pd-auth-server@8764,pd-gateway@8760"
-def project_name = "pd-auth-server@8764,pd-gateway@8760"
+def project_name = "pd-auth-server@8764"
 def dockerImagePrefix = "pinda"
 def projectRootNames = "pd-apps"
 //构建版本的名称
