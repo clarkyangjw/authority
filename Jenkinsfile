@@ -1,6 +1,6 @@
 def git_address = "git@github.com:clarkyangjw/authority.git"
 def git_auth = "github-auth"
-def branch = "clark"
+def branch = "master"
 //project_name: pd-auth-server@8764,pd-gateway@8760
 def project_name = "pd-auth-server@8764,pd-gateway@8760"
 def dockerImagePrefix = "pinda"
