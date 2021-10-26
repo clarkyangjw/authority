@@ -1,6 +1,6 @@
 def git_address = "git@github.com:clarkyangjw/authority.git"
 def git_auth = "github-auth"
-def branch = "master"
+def branch = "clark"
 //project_name: pd-auth-server@8764,pd-gateway@8760
 def project_name = "pd-auth-server@8764,pd-gateway@8760"
 def dockerImagePrefix = "pinda"
@@ -77,10 +77,10 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
 //             }
 //         }
         // 第3步
-//         stage('Step 3: Building common tools'){
-//             //编译并安装公共工程
-//             sh "mvn -f pd-tools clean install"
-//         }
+        stage('Step 3: Building common tools'){
+            //编译并安装公共工程
+            sh "mvn -f pd-tools clean install"
+        }
         // 第4步
         stage('Step 4: Building images and deploying project'){
             //编译安装pd-parent和所有pd-apps为服务
@@ -131,8 +131,6 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                     sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' ${projectServerPath}/deploy.yml
                     sed -i 's#\$SECRET_NAME#${secret_name}#' ${projectServerPath}/deploy.yml
                 """
-                //cat ${currentProjectName}/deploy.yml
-                //ls /usr/local/apache-maven/repo
                 kubernetesDeploy(kubeconfigId: "${k8s_auth}",
                                  configs: "${projectServerPath}/deploy.yml",
                 )
