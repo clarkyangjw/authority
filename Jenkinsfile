@@ -1,9 +1,9 @@
 def git_address = "git@github.com:clarkyangjw/authority.git"
 def git_auth = "github-auth"
-def branch = "master"
+def branch = "clark"
+def context = "docker"
 //project_name: pd-auth-server@8764,pd-gateway@8760
-//def project_name111 = "pd-auth-server@8764,pd-gateway@8760"
-def project_name = "pd-auth-server@8764,pd-gateway@8760"
+def project_name = "pd-auth-server@8764"
 def dockerImagePrefix = "pinda"
 def projectRootNames = "pd-apps"
 //构建版本的名称
@@ -13,6 +13,7 @@ def docker_hub_auth = "docker-hub-auth"
 def k8s_auth = "k8s-auth"
 //k8s-dockerhub的连接凭证
 def secret_name = "registry-auth-secret"
+
 
 
 podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
@@ -78,15 +79,15 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
 //             }
 //         }
         // 第3步
-        stage('Step 3: Building common tools'){
+        stage('Step 3: Building parent project and common tools'){
             //编译并安装公共工程
-            sh "mvn -f pd-tools clean install"
+            sh "mvn -f pd-parent clean install –P ${context}"
+            sh "mvn -f pd-tools clean install –P ${context}"
         }
         // 第4步
         stage('Step 4: Building images and deploying project'){
             //编译安装pd-parent和所有pd-apps为服务
-            sh "mvn -f pd-parent clean install"
-            sh "mvn -f ${projectRootNames} clean install"
+            sh "mvn -f ${projectRootNames} clean install –P ${context}"
             //把选择的项目信息转为数组
             def selectedProjects = "${project_name}".split(',')
             for(int i=0;i<selectedProjects.size();i++){
