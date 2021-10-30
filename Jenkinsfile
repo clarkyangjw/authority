@@ -1,18 +1,21 @@
 def git_address = "git@github.com:clarkyangjw/authority.git"
 def git_auth = "github-auth"
-def branch = "test"
-def context = "docker"
-//project_name: pd-auth-server@8764,pd-gateway@8760
-def project_name = "pd-auth-server@8764,pd-gateway@8760"
-def dockerImagePrefix = "pinda"
-def projectRootNames = "pd-apps"
-//构建版本的名称
-def tag = "latest"
 def docker_hub_username = "clarkyang"
 def docker_hub_auth = "docker-hub-auth"
-def k8s_auth = "k8s-auth"
 //k8s-dockerhub的连接凭证
+def k8s_auth = "k8s-auth"
 def secret_name = "registry-auth-secret"
+def dockerImagePrefix = "pinda"
+def projectRootNames = "pd-apps"
+
+
+//branch should be the running context: master or test
+def branch = "test"
+def context = "docker"
+//构建版本的名称
+def tag = "latest"
+//project_name: pd-auth-server@8764,pd-gateway@8760
+def project_name = "pd-auth-server@8764,pd-gateway@8760"
 
 
 podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
