@@ -79,13 +79,14 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
 //         }
         // 第3步
         stage('Step 3: Building common tools'){
+            //编译安装pd-parent
             sh "mvn -f pd-parent clean install -P ${context}"
             //编译并安装公共工程
             sh "mvn -f pd-tools clean install -P ${context}"
         }
         // 第4步
         stage('Step 4: Building images and deploying project'){
-            //编译安装pd-parent和所有pd-apps为服务
+            //编译安装所有pd-apps为服务
             sh "mvn -f ${projectRootNames} clean install -P ${context}"
             //把选择的项目信息转为数组
             def selectedProjects = "${project_name}".split(',')
@@ -110,7 +111,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def imageName = "${currentProjectName}:${tag}"
                 //编译，构建本地镜像
                 sh """
-                    mvn -f ${projectServerPath} clean package dockerfile:build"
+                    mvn -f ${projectServerPath} clean package dockerfile:build -P ${context}
                 """
                 container('docker') {
                     //给镜像打标签
