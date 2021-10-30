@@ -82,7 +82,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
             //编译安装pd-parent
             sh "mvn -f pd-parent clean install -P ${context}"
             //编译并安装公共工程
-            sh "mvn -f pd-tools clean install -P ${context}"
+            //sh "mvn -f pd-tools clean install -P ${context}"
         }
         // 第4步
         stage('Step 4: Building images and deploying project'){
@@ -111,7 +111,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
                 def imageName = "${currentProjectName}:${tag}"
                 //编译，构建本地镜像
                 sh """
-                    mvn -f ${projectServerPath} clean package dockerfile:build -P ${context}
+                    mvn -f ${projectServerPath} clean package dockerfile:build
                 """
                 container('docker') {
                     //给镜像打标签
