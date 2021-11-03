@@ -18,6 +18,8 @@
     <modules>
         <module>pd-auth</module>
         <module>pd-gateway</module>
+        <module>bbs-forum</module>
+        <module>bbs-auth</module>
         <!--<module>pd-file</module>-->
     </modules>
     <dependencyManagement>
