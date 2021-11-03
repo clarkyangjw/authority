@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>bbs-auth</artifactId>
-        <groupId>com.metaverseapp</groupId>
+        <groupId>net.metaverseapp</groupId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
@@ -12,7 +12,7 @@
 
     <artifactId>bbs-auth-server</artifactId>
     <name>${project.artifactId}</name>
-    <description>权限认证服务启动模块</description>
+    <description>论坛权限认证服务启动模块</description>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -20,8 +20,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.itheima</groupId>
-            <artifactId>pd-auth-entity</artifactId>
+            <groupId>net.metaverseapp</groupId>
+            <artifactId>bbs-auth-entity</artifactId>
         </dependency>
         <dependency>
             <groupId>com.itheima</groupId>

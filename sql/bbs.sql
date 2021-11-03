@@ -110,15 +110,15 @@ CREATE TABLE `bbs_menu` (
 INSERT INTO `bbs_menu`
 (`id`, `name`, `is_public`, `path`, `component`, `sort_order`, `icon`, `parent_id`, `create_user`, `create_time`, `update_user`, `update_time`, `is_active`)
 VALUES
-('1', 'BBS User Management', '', '/user', '/bbs/pages/user', 1, 'http://www.skiles.net/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
-('2', 'BBS Role Management', '', '/role', '/bbs/pages/role', 2, 'http://www.pacochamraz.biz/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
-('3', 'BBS Resource Management', '', '/resource', '/bbs/pages/resource', 3, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
-('4', 'BBS Menu Management', '', '/menu', '/bbs/pages/menu', 4, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
-('5', 'BBS Class Management', '', '/class', '/bbs/pages/class', 5, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
-('6', 'BBS Subject Management', '', '/subject', '/bbs/pages/subject', 6, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
-('7', 'BBS Topic Management', '', '/topic', '/bbs/pages/topic', 7, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
-('8', 'BBS Reply Management', '', '/reply', '/bbs/pages/reply', 8, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
-('9', 'BBS State Type Management', '', '/stateType', '/bbs/pages/stateType', 9, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', '')
+('1', 'BBS User Management', '\0', '/user', '/bbs/pages/user', 1, 'http://www.skiles.net/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
+('2', 'BBS Role Management', '\0', '/role', '/bbs/pages/role', 2, 'http://www.pacochamraz.biz/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
+('3', 'BBS Resource Management', '\0', '/resource', '/bbs/pages/resource', 3, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
+('4', 'BBS Menu Management', '\0', '/menu', '/bbs/pages/menu', 4, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
+('5', 'BBS Class Management', '\0', '/class', '/bbs/pages/class', 5, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
+('6', 'BBS Subject Management', '\0', '/subject', '/bbs/pages/subject', 6, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
+('7', 'BBS Topic Management', '\0', '/topic', '/bbs/pages/topic', 7, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
+('8', 'BBS Reply Management', '\0', '/reply', '/bbs/pages/reply', 8, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', ''),
+('9', 'BBS State Type Management', '\0', '/stateType', '/bbs/pages/stateType', 9, 'http://wiegandernser.com/', '0', '1', '2021-10-30 22:26:35', '1', '2021-10-30 22:26:35', '')
 ;
 
 

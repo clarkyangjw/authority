@@ -14,7 +14,13 @@ import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
-
+/**
+ * <p>
+ * Entity
+ * User
+ * </p>
+ *
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -137,34 +143,6 @@ public class User extends Entity<Long> {
     @ApiModelProperty(value = "amount")
     @TableField("amount")
     private Integer amount;
-
-    /**
-     * createUser
-     */
-    @ApiModelProperty(value = "createUser")
-    @TableField("create_user")
-    private Long createUser;
-
-    /**
-     * createTime
-     */
-    @ApiModelProperty(value = "createTime")
-    @TableField("create_time")
-    private LocalDateTime createTime;
-
-    /**
-     * updateUser
-     */
-    @ApiModelProperty(value = "updateUser")
-    @TableField("update_user")
-    private Long updateUser;
-
-    /**
-     * updateTime
-     */
-    @ApiModelProperty(value = "updateTime")
-    @TableField("update_time")
-    private LocalDateTime updateTime;
 
     /**
      * isActive
