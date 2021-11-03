@@ -9,9 +9,9 @@ def dockerImagePrefix = "pinda"
 def projectRootNames = "pd-apps"
 
 
-//branch should be the running context: master/prod/bbs-prod/30000 or test/docker/bbs-docker/31000
+//branch should be the running context: master/prod/bbs-prod/30000 or develop/docker/bbs-docker/31000
 //If it's master/prod, the namespace in deploy.yml should be changed to bbs-prod, and port should start with 30000
-def branch = "test"
+def branch = "develop"
 def context = "docker"
 //构建版本的名称
 def tag = "latest"
