@@ -517,6 +517,50 @@ VALUES
 ('5', '4', '3', 1, '1', '2021-10-30 22:26:35')
 ;
 
+-- ----------------------------
+-- Table structure for `bbs_common_login_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `bbs_common_login_log`;
+CREATE TABLE `bbs_common_login_log` (
+  `id` bigint NOT NULL PRIMARY KEY,
+  `request_ip` varchar(50) DEFAULT '' COMMENT 'User IP',
+  `user_id` bigint DEFAULT NULL,
+  `user_nike_name` varchar(50) DEFAULT NULL,
+  `user_username` varchar(30) DEFAULT NULL,
+  `description` varchar(255) DEFAULT '',
+  `login_datetime` datetime DEFAULT NULL,
+  `ua` varchar(500) DEFAULT '0' COMMENT 'Browser request header',
+  `browser` varchar(100) DEFAULT NULL COMMENT 'Browser name',
+  `browser_version` varchar(255) DEFAULT NULL COMMENT 'Browser version',
+  `operating_system` varchar(100) DEFAULT NULL COMMENT 'Operating_system',
+  `location` varchar(50) DEFAULT '' COMMENT 'Login location',
+  `create_time` datetime DEFAULT NULL,
+  `create_user` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='Login log';
 
 
-
+-- ----------------------------
+-- Table structure for `bbs_common_opt_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `bbs_common_opt_log`;
+CREATE TABLE `bbs_common_opt_log` (
+  `id` bigint(20) NOT NULL PRIMARY KEY,
+  `request_ip` varchar(50) DEFAULT '',
+  `type` varchar(5) DEFAULT 'OPT' COMMENT 'Log type\n#LogType{OPT:operation;EX:exception}',
+  `user_username` varchar(30) DEFAULT '',
+  `description` varchar(255) DEFAULT '',
+  `class_path` varchar(255) DEFAULT '',
+  `action_method` varchar(50) DEFAULT '',
+  `request_uri` varchar(50) DEFAULT '',
+  `http_method` varchar(10) DEFAULT 'GET' COMMENT 'Request method\n#HttpMethod{GET:GET请求;POST:POST请求;PUT:PUT请求;DELETE:DELETE请求;PATCH:PATCH请求;TRACE:TRACE请求;HEAD:HEAD请求;OPTIONS:OPTIONS请求;}',
+  `params` longtext COMMENT 'Request parameter',
+  `result` longtext COMMENT 'Return value',
+  `ex_desc` longtext COMMENT 'Exception description',
+  `ex_detail` longtext COMMENT 'Exception detail',
+  `start_time` timestamp NULL DEFAULT NULL,
+  `finish_time` timestamp NULL DEFAULT NULL,
+  `consuming_time` bigint(20) DEFAULT '0',
+  `ua` varchar(500) DEFAULT '' COMMENT 'Browser',
+  `create_time` datetime DEFAULT NULL,
+  `create_user` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='System log';
