@@ -60,7 +60,7 @@ public enum Gender implements BaseEnum {
     }
 
     @Override
-    @ApiModelProperty(value = "getCode", allowableValues = "F,M,L,G,B,T,Q,S", example = "S")
+    @ApiModelProperty(value = "编码", allowableValues = "F,M,L,G,B,T,Q,S", example = "S")
     public String getCode() {
         return this.name();
     }

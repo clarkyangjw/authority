@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.metaverseapp.bbs.authority.biz.dao.auth.MenuMapper">
+    <!-- 通用查询结果列 -->
+    <sql id="V_Column_List">
+        id, name, path, component, is_active, sort_order, icon, parent_id
+    </sql>
+
+    <select id="findVisibleMenu" parameterType="map"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="V_Column_List"/>
+        from (
+        SELECT
+        <include refid="V_Column_List"/>
+        from bbs_menu where is_active = true and is_public = true
+        UNION ALL
+        SELECT
+        <include refid="V_Column_List"/>
+        from bbs_menu where is_active = true and is_public = false
+        and id in (
+        SELECT distinct authority_id FROM bbs_role_authority ra
+        INNER JOIN bbs_user_role ur on ra.role_id = ur.role_id
+        INNER JOIN bbs_role r on r.id = ra.role_id
+        where ur.user_id = #{userId, jdbcType=BIGINT} and r.is_active = true
+        and ra.authority_type = 'MENU'
+        )
+        ) tmp ORDER BY sort_order asc
+    </select>
+
+
+</mapper>

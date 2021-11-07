@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS `bbs_user`;
 CREATE TABLE `bbs_user` (
   `id` bigint NOT NULL PRIMARY KEY,
   `username` varchar(30) NOT NULL,
-  `nick_name` varchar(50) DEFAULT NULL,
+  `nickname` varchar(50) DEFAULT NULL,
   `password` varchar(64) NOT NULL,
   `email` varchar(50) NOT NULL,
   `portrait_url` varchar(400) DEFAULT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `bbs_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 INSERT INTO `bbs_user`
-(`id`, `username`, `nick_name`, `password`, `email`, `portrait_url`, `gender`, `intro`, `signature`, `topic_count`, `reply_count`, `best_topic_count`, `last_topic_id`, `last_login`, `amount`, `create_user`, `create_time`, `update_user`, `update_time`, `is_active`)
+(`id`, `username`, `nickname`, `password`, `email`, `portrait_url`, `gender`, `intro`, `signature`, `topic_count`, `reply_count`, `best_topic_count`, `last_topic_id`, `last_login`, `amount`, `create_user`, `create_time`, `update_user`, `update_time`, `is_active`)
 VALUES
 ('1', 'pinda', 'pinda', 'cea87ef1cb2e47570020bf7c014e1074', 'ricardo14@example.org', 'http://dietrichgulgowski.info/', 'L', NULL, NULL, 0, 0, 0, '0', '2021-10-30 22:26:35', 0, '0', '2021-10-30 22:26:35', '0', '2021-10-30 22:26:35', ''),
 ('2', 'Clark', 'Clark', 'cea87ef1cb2e47570020bf7c014e1074', 'josie37@example.net', 'http://www.fadelosinski.com/', 'M', NULL, NULL, 0, 0, 0, '0', '2021-10-30 22:26:35', 0, '0', '2021-10-30 22:26:35', '0', '2021-10-30 22:26:35', ''),
@@ -83,7 +83,7 @@ VALUES
 ('1', '1', '1', '1', '2021-10-30 22:26:35'),
 ('2', '2', '2', '1', '2021-10-30 22:26:35'),
 ('3', '3', '3', '1', '2021-10-30 22:26:35'),
-('4', '4', '4', '1', '2021-10-30 22:26:35')
+('4', '4', '1', '1', '2021-10-30 22:26:35')
 ;
 
 
@@ -518,21 +518,20 @@ VALUES
 ;
 
 -- ----------------------------
--- Table structure for `bbs_common_login_log`
+-- Table structure for `bbs_login_log`
 -- ----------------------------
-DROP TABLE IF EXISTS `bbs_common_login_log`;
-CREATE TABLE `bbs_common_login_log` (
+DROP TABLE IF EXISTS `bbs_login_log`;
+CREATE TABLE `bbs_login_log` (
   `id` bigint NOT NULL PRIMARY KEY,
   `request_ip` varchar(50) DEFAULT '' COMMENT 'User IP',
-  `user_id` bigint DEFAULT NULL,
-  `user_nike_name` varchar(50) DEFAULT NULL,
   `user_username` varchar(30) DEFAULT NULL,
+  `user_nickname` varchar(50) DEFAULT NULL,
   `description` varchar(255) DEFAULT '',
   `login_datetime` datetime DEFAULT NULL,
   `ua` varchar(500) DEFAULT '0' COMMENT 'Browser request header',
   `browser` varchar(100) DEFAULT NULL COMMENT 'Browser name',
   `browser_version` varchar(255) DEFAULT NULL COMMENT 'Browser version',
-  `operating_system` varchar(100) DEFAULT NULL COMMENT 'Operating_system',
+  `operating_system` varchar(100) DEFAULT NULL COMMENT 'Operating system',
   `location` varchar(50) DEFAULT '' COMMENT 'Login location',
   `create_time` datetime DEFAULT NULL,
   `create_user` bigint(20) DEFAULT NULL
@@ -540,14 +539,14 @@ CREATE TABLE `bbs_common_login_log` (
 
 
 -- ----------------------------
--- Table structure for `bbs_common_opt_log`
+-- Table structure for `bbs_opt_log`
 -- ----------------------------
-DROP TABLE IF EXISTS `bbs_common_opt_log`;
-CREATE TABLE `bbs_common_opt_log` (
+DROP TABLE IF EXISTS `bbs_opt_log`;
+CREATE TABLE `bbs_opt_log` (
   `id` bigint(20) NOT NULL PRIMARY KEY,
   `request_ip` varchar(50) DEFAULT '',
   `type` varchar(5) DEFAULT 'OPT' COMMENT 'Log type\n#LogType{OPT:operation;EX:exception}',
-  `user_username` varchar(30) DEFAULT '',
+  `user_name` varchar(50) DEFAULT '',
   `description` varchar(255) DEFAULT '',
   `class_path` varchar(255) DEFAULT '',
   `action_method` varchar(50) DEFAULT '',

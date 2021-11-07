@@ -42,13 +42,13 @@ public class User extends Entity<Long> {
     private String username;
 
     /**
-     * nickName
+     * nickname
      */
     @ApiModelProperty(value = "nickname")
     @NotEmpty(message = "Nickname can not be null")
     @Length(max = 50, message = "The length of nickname can not exceed 50")
-    @TableField(value = "nick_name", condition = LIKE)
-    private String nickName;
+    @TableField(value = "nickname", condition = LIKE)
+    private String nickname;
 
     /**
      * password
@@ -155,7 +155,7 @@ public class User extends Entity<Long> {
     @Builder
     public User(Long id,
                 String username,
-                String nickName,
+                String nickname,
                 String password,
                 String email,
                 String portraitUrl,
@@ -175,7 +175,7 @@ public class User extends Entity<Long> {
                 Boolean isActive) {
         this.id = id;
         this.username = username;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.email = email;
         this.password = password;
         this.portraitUrl = portraitUrl;

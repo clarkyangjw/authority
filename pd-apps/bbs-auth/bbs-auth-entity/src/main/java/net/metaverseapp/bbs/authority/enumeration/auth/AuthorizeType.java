@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value = "AuthorizeType", description = "AuthorizeType-enumeration")
+@ApiModel(value = "BBSAuthorizeType", description = "AuthorizeType-enumeration")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum AuthorizeType implements BaseEnum {
 
@@ -60,7 +60,7 @@ public enum AuthorizeType implements BaseEnum {
     }
 
     @Override
-    @ApiModelProperty(value = "getCode", allowableValues = "MENU,RESOURCE", example = "MENU")
+    @ApiModelProperty(value = "编码", allowableValues = "MENU,RESOURCE", example = "MENU")
     public String getCode() {
         return this.name();
     }

@@ -29,7 +29,6 @@ public class UserDTO implements Serializable {
     @ApiModelProperty(value = "ID")
     private Long id;
 
-
     /**
      * username
      */

@@ -15,8 +15,8 @@ def branch = "develop"
 def context = "docker"
 //构建版本的名称
 def tag = "latest"
-//project_name: pd-auth-server@8764,pd-gateway@8760
-def project_name = "pd-auth-server@8764,pd-gateway@8760"
+//project_name: pd-auth-server@8764,pd-gateway@8760,bbs-auth-server@8767
+def project_name = "pd-gateway@8760,bbs-auth-server@8767"
 
 
 podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',

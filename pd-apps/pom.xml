@@ -29,6 +29,11 @@
                 <artifactId>pd-auth-entity</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>net.metaverseapp</groupId>
+                <artifactId>bbs-auth-entity</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!--<dependency>
                 <groupId>com.itheima</groupId>
                 <artifactId>pd-auth-api</artifactId>
