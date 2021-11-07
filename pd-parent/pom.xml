@@ -27,10 +27,10 @@
         <!-- 开发 -->
         <profile>
             <id>dev</id>
-            <activation>
-                <!--默认激活配置-->
-                <activeByDefault>true</activeByDefault>
-            </activation>
+<!--            <activation>-->
+<!--                &lt;!&ndash;默认激活配置&ndash;&gt;-->
+<!--                <activeByDefault>true</activeByDefault>-->
+<!--            </activation>-->
             <properties>
                 <!--当前环境-->
                 <pom.profile.name>dev</pom.profile.name>
@@ -44,10 +44,10 @@
         <!-- docker 环境 -->
         <profile>
             <id>docker</id>
-<!--            <activation>-->
-<!--                &lt;!&ndash;默认激活配置&ndash;&gt;-->
-<!--                <activeByDefault>true</activeByDefault>-->
-<!--            </activation>-->
+            <activation>
+                <!--默认激活配置-->
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <pom.profile.name>docker</pom.profile.name>
                 <!--Nacos配置中心地址-->
