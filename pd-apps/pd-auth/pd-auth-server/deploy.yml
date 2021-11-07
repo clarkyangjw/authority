@@ -1,42 +1,42 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-server
+  name: pd-auth-server
   namespace: bbs-docker
   labels:
-    app: auth-server
+    app: pd-auth-server
 spec:
   type: NodePort
   ports:
   - port: 8764
-    name: auth-server
+    name: pd-auth-server
     targetPort: 8764
     nodePort: 31004
   selector:
-    app: auth-server
+    app: pd-auth-server
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: auth-server
+  name: pd-auth-server
   namespace: bbs-docker
   labels:
-    name: auth-server
+    name: pd-auth-server
 spec:
-  serviceName: "auth-server"
+  serviceName: "pd-auth-server"
   replicas: 2
   selector:
     matchLabels:
-      app: auth-server
+      app: pd-auth-server
   template:
     metadata:
       labels:
-        app: auth-server
+        app: pd-auth-server
     spec:
       imagePullSecrets:
         - name: $SECRET_NAME
       containers:
-        - name: auth-server
+        - name: pd-auth-server
           image: $IMAGE_NAME
           ports:
             - containerPort: 8764

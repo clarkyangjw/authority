@@ -10,10 +10,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.metaverseapp</groupId>
+    <groupId>net.metaverseapp</groupId>
     <artifactId>bbs-forum</artifactId>
     <name>${project.artifactId}</name>
-    <description>权限服务</description>
+    <description>论坛服务</description>
     <modules>
         <module>bbs-forum-entity</module>
         <module>bbs-forum-server</module>
