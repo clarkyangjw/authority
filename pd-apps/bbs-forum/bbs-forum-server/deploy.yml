@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bbs-forum-server
+  namespace: bbs-docker
+  labels:
+    app: bbs-forum-server
+spec:
+  type: NodePort
+  ports:
+  - port: 8768
+    name: bbs-forum-server
+    targetPort: 8768
+    nodePort: 31007
+  selector:
+    app: bbs-forum-server
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: bbs-forum-server
+  namespace: bbs-docker
+  labels:
+    name: bbs-forum-server
+spec:
+  serviceName: bbs-forum-server
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bbs-forum-server
+  template:
+    metadata:
+      labels:
+        app: bbs-forum-server
+    spec:
+      imagePullSecrets:
+        - name: $SECRET_NAME
+      containers:
+        - name: bbs-forum-server
+          image: $IMAGE_NAME
+          ports:
+            - containerPort: 8768
+  podManagementPolicy: "Parallel"
