@@ -16,7 +16,7 @@ def context = "docker"
 //构建版本的名称
 def tag = "latest"
 //project_name: pd-auth-server@8764,pd-gateway@8760,bbs-auth-server@8767,bbs-forum-server@8768
-def project_name = "bbs-forum-server@8768"
+def project_name = "pd-auth-server@8764,pd-gateway@8760,bbs-auth-server@8767,bbs-forum-server@8768"
 
 
 podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
@@ -86,7 +86,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
             //编译安装pd-parent
             sh "mvn -f pd-parent clean install -P ${context}"
             //编译并安装公共工程
-            //sh "mvn -f pd-tools clean install -P ${context}"
+            sh "mvn -f pd-tools clean install -P ${context}"
         }
         // 第4步
         stage('Step 4: Building images and deploying project'){
@@ -147,7 +147,7 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
             emailext(
                 subject: 'Deploying notification: ${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}!',
                 body: '${FILE,path="email.html"}',
-                to: 'senecacbbs@gmail.com'
+                to: 'senecabbs01@gmail.com'
             )
         }
 
