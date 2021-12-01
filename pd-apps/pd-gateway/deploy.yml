@@ -1,42 +1,42 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gateway
+  name: pd-gateway
   namespace: bbs-docker
   labels:
-    app: gateway
+    app: pd-gateway
 spec:
   type: NodePort
   ports:
   - port: 8760
-    name: gateway
+    name: pd-gateway
     targetPort: 8760
     nodePort: 31005
   selector:
-    app: gateway
+    app: pd-gateway
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: gateway
+  name: pd-gateway
   namespace: bbs-docker
   labels:
-    name: gateway
+    name: pd-gateway
 spec:
-  serviceName: "gateway"
+  serviceName: "pd-gateway"
   replicas: 2
   selector:
     matchLabels:
-      app: gateway
+      app: pd-gateway
   template:
     metadata:
       labels:
-        app: gateway
+        app: pd-gateway
     spec:
       imagePullSecrets:
         - name: $SECRET_NAME
       containers:
-        - name: gateway
+        - name: pd-gateway
           image: $IMAGE_NAME
           ports:
             - containerPort: 8760

@@ -9,14 +9,14 @@ def dockerImagePrefix = "pinda"
 def projectRootNames = "pd-apps"
 
 
-//branch should be the running context: master/prod/bbs-prod/30000 or test/docker/bbs-docker/31000
+//branch should be the running context: master/prod/bbs-prod/30000 or develop/docker/bbs-docker/31000
 //If it's master/prod, the namespace in deploy.yml should be changed to bbs-prod, and port should start with 30000
-def branch = "test"
+def branch = "develop"
 def context = "docker"
 //构建版本的名称
 def tag = "latest"
-//project_name: pd-auth-server@8764,pd-gateway@8760
-def project_name = "pd-auth-server@8764,pd-gateway@8760"
+//project_name: pd-auth-server@8764,pd-gateway@8760,bbs-auth-server@8767,bbs-forum-server@8768
+def project_name = "pd-auth-server@8764,pd-gateway@8760,bbs-auth-server@8767,bbs-forum-server@8768"
 
 
 podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
@@ -82,12 +82,12 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
 //             }
 //         }
         // 第3步
-        stage('Step 3: Building common tools'){
-            //编译安装pd-parent
-            sh "mvn -f pd-parent clean install -P ${context}"
-            //编译并安装公共工程
-            //sh "mvn -f pd-tools clean install -P ${context}"
-        }
+//         stage('Step 3: Building common tools'){
+//             //编译安装pd-parent
+//             sh "mvn -f pd-parent clean install -P ${context}"
+//             //编译并安装公共工程
+//             sh "mvn -f pd-tools clean install -P ${context}"
+//         }
         // 第4步
         stage('Step 4: Building images and deploying project'){
             //编译安装所有pd-apps为服务
@@ -143,13 +143,13 @@ podTemplate(label: 'jenkins-slave', cloud: 'kubernetes',
             }
         }
         // 第5步
-        stage ('Step 5: Sending Email about deploying result'){
-            emailext(
-                subject: 'Deploying notification: ${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}!',
-                body: '${FILE,path="email.html"}',
-                to: 'senecacbbs@gmail.com'
-            )
-        }
+//         stage ('Step 5: Sending Email about deploying result'){
+//             emailext(
+//                 subject: 'Deploying notification: ${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}!',
+//                 body: '${FILE,path="email.html"}',
+//                 to: 'senecabbs01@gmail.com'
+//             )
+//         }
 
     }
 }

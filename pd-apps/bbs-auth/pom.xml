@@ -10,9 +10,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.metaverseapp</groupId>
+    <groupId>net.metaverseapp</groupId>
     <artifactId>bbs-auth</artifactId>
-    <description>权限服务</description>
+    <description>论坛权限服务</description>
     <modules>
         <module>bbs-auth-entity</module>
         <module>bbs-auth-server</module>
