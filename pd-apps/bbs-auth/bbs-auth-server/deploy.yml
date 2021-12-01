@@ -11,7 +11,7 @@ spec:
   - port: 8767
     name: bbs-auth-server
     targetPort: 8767
-    nodePort: 31006
+#    nodePort: 31006
   selector:
     app: bbs-auth-server
 ---

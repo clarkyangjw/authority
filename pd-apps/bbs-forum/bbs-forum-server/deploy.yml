@@ -11,7 +11,7 @@ spec:
   - port: 8768
     name: bbs-forum-server
     targetPort: 8768
-    nodePort: 31007
+#    nodePort: 31007
   selector:
     app: bbs-forum-server
 ---
