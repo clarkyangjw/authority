@@ -11,7 +11,7 @@ spec:
   - port: 8764
     name: pd-auth-server
     targetPort: 8764
-    nodePort: 31004
+#    nodePort: 31004
   selector:
     app: pd-auth-server
 ---
